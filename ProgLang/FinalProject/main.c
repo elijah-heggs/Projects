@@ -4,11 +4,51 @@
 // By Elijah Heggs
 
 #include "queue.h"
+#include "stack.h"
 
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+static void demonstrate_stack(void) {
+    printf("\n\n=====Stack=====\n");
+
+    Stack *stack = stack_create(5);
+    if (stack == NULL) {
+        fprintf(stderr, "failed to create stack\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int values[] = {10, 20, 30, 40};
+
+    for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
+        printf("Push %d\n", values[i]);
+
+        if (!stack_push(stack, values[i])) {
+            printf("stack full\n");
+        }
+
+        stack_print(stack);
+    }
+
+    int top_value;
+    if (stack_peek(stack, &top_value)) {
+        printf("top value: %d\n", top_value);
+    }
+
+    printf("stack size: %zu\n", stack_size(stack));
+
+    printf("\npopping all values:\n");
+    while (stack_pop(stack, &top_value)) {
+        printf("popped %d\n", top_value);
+        stack_print(stack);
+    }
+
+    printf("stack empty: %s\n",
+           stack_is_empty(stack) ? "true" : "false");
+
+    stack_destroy(stack);
+}
 
 static void demonstrate_queue(void) {
     printf("=====Queue=====\n");
@@ -67,6 +107,7 @@ static void demonstrate_queue(void) {
 
 int main(void) {
     demonstrate_queue();
+    demonstrate_stack();
 
     return EXIT_SUCCESS;
 }
