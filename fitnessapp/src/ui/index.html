@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Big Muscles Fitness Application</title>
+
+    <script src="client.js" defer></script>
+
+    
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 24px;
+        background-color: #f4f5f7;
+        color: #222;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .exercise-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .exercise-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #00000012;
+    }
+
+    .exercise-card h3 {
+        margin-top: 0;
+    }
+
+    .exercise-card label {
+        display: block;
+        margin-top: 12px;
+    }
+
+    .exercise-card input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .exercise-card button {
+        width: 100%;
+        margin-top: 18px;
+        padding: 12px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .exercise-card button:hover {
+        background: #1d4ed8;
+    }
+
+    .save-status {
+        min-height: 18px;
+        font-size: 13px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h1>Big Muscles Fitness Application</h1>
+<h3>By Elijah Heggs</h3>
+
+<!-- LOGIN FORM -->
+<div id="loginUI">
+    <h3>Login</h3>
+
+    <form id="loginForm">
+        <label for="loginUsername">Username:</label>
+        <input
+            type="text"
+            id="loginUsername"
+            pattern="\w{5,15}"
+            required
+        >
+
+        <br>
+
+        <label for="loginPassword">Password:</label>
+        <input
+            type="password"
+            id="loginPassword"
+            pattern="(?=.*[A-Za-z])(?=.*\d).{6,}"
+            required
+        >
+
+        <br>
+
+        <button type="button" id="joinBtn">
+            Log In
+        </button>
+    </form>
+
+    <div id="login-error" style="color:red;"></div>
+
+    <p>
+        Don't have an account?
+        <a href="#" id="showRegisterBtn">
+            Register here
+        </a>
+    </p>
+</div>
+
+<!-- REGISTER FORM -->
+<div id="registerUI">
+    <h3>Sign up for a new account</h3>
+
+    <form id="registerForm">
+        <label for="registerUsername">
+            Username (5-15 characters):
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            id="registerUsername"
+            pattern="\w{5,15}"
+            required
+        >
+
+        <br>
+
+        <label for="registerPassword">
+            Password (at least 6 characters,
+            with letters and numbers):
+        </label>
+
+        <br>
+
+        <input
+            type="password"
+            id="registerPassword"
+            pattern="(?=.*[A-Za-z])(?=.*\d).{6,}"
+            required
+        >
+
+        <br>
+
+        <button type="button" id="registerBtn">
+            Register
+        </button>
+    </form>
+
+    <div id="register-error" style="color:red;"></div>
+
+    <p>
+        Already have an account?
+        <a href="#" id="showLoginBtn">
+            Log in here
+        </a>
+    </p>
+</div>
+
+
+<section id="homeUI" style="display: none;">
+    <header class="dashboard-header">
+        <div>
+            <h1>Big Muscles</h1>
+            <p id="welcomeMessage"></p>
+        </div>
+    </header>
+
+    <h2>My Exercises</h2>
+
+    <div id="exerciseGrid" class="exercise-grid"></div>
+</section>
+
+</body>
+</html>
+
+
+
