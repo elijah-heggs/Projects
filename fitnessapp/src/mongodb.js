@@ -1,5 +1,4 @@
-
-const { MongoClient } = require("mongodb");
+const { MongoClient } = require('mongodb');
 const bcrypt = require("bcryptjs");
 
 require("dotenv").config();
@@ -13,40 +12,17 @@ if (!uri) {
 const client = new MongoClient(uri);
 
 let users;
-let exercises;
 
 async function connect() {
     await client.connect();
 
     const database = client.db("fitnessapp");
-
     users = database.collection("users");
-    await users.createIndex({ username: 1 }, { unique: true });
 
-    exercises = database.collection("exercises");
-    await exercises.createIndex({ userId: 1, exerciseId: 1 }, { unique: true });
+    await users.createIndex({ username: 1 }, {unique: true });
+
 
     console.log("Connected to MongoDB");
-}
-
-async function getExercises(userId) {
-    return await exercises.find({ userId }).toArray();
-}
-
-// Save or update a single exercise
-async function saveExercise(userId, exerciseId, weight, sets, reps) {
-    return await exercises.updateOne(
-        { userId, exerciseId },
-        {
-            $set: {
-                weight,
-                sets,
-                reps,
-                updatedAt: new Date()
-            }
-        },
-        { upsert: true }
-    );
 }
 
 async function register(username, password) {
@@ -58,6 +34,7 @@ async function register(username, password) {
             message: "Username already exists"
         };
     }
+
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -76,12 +53,12 @@ async function register(username, password) {
         }
         throw err;
     }
-
     return {
         success: true,
-        message: "Account created successfully"
+        message: "Account created"
     };
 }
+
 
 async function find(username, password) {
     const user = await users.findOne({ username });
@@ -108,7 +85,5 @@ async function find(username, password) {
 module.exports = {
     connect,
     register,
-    find,
-    getExercises,
-    saveExercise
+    find
 };
